@@ -99,6 +99,11 @@ void init_userButton() {
   NVIC_Init(&NVIC_InitStructure);																																		//Pass struct to NVIC, initialize
 }
 
+/**  
+  * @brief  Function that initializes TIM3 peripheral timer. 
+  * @param  None  
+  * @retval None  
+  */
 void init_TIM3() {
   NVIC_InitTypeDef NVIC_InitStructure;																								//NVIC initialization struct
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;																			//Timer initialization struct

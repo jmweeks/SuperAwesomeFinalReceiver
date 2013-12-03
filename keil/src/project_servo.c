@@ -1,8 +1,18 @@
+/*!
+	@file project_servo.c
+	Source file for the servo initialization and functionality.
+*/
 #include "stm32f4xx.h"
 #include "cmsis_os.h"
 
 #include "project_servo.h"
 
+/**  
+  * @brief  Function that updates the servo position.
+  * @param  *servo: pointer to Servo structure.
+	* @param  position: value of angle that the servo must take.  
+  * @retval None  
+  */
 static void update_position(struct Servo *servo, uint32_t position) {
 	if (position > servo->maxPosition) {
 		position = servo->maxPosition;
@@ -26,7 +36,12 @@ static void update_position(struct Servo *servo, uint32_t position) {
 	}
 	servo->realPosition = position;
 }
-
+/**  
+  * @brief  Function that initializes a servo.
+  * @param  *servo: pointer to Servo structure.
+	* @param  *servoInit: pointert to ServoInit structure. 
+  * @retval None  
+  */
 void init_servo(struct Servo *servo, struct ServoInit *servoInit) {
 	servo->CCR = servoInit->CCR;
 	
@@ -55,12 +70,23 @@ void init_servo(struct Servo *servo, struct ServoInit *servoInit) {
 	servo->mutexID=osMutexCreate(osMutex(servoMutex));
 }
 
+/**  
+  * @brief  Function that moves the servo to the desired position.
+  * @param  *servo: pointer to Servo structure.
+	* @param  position: value of position that servo must take.  
+  * @retval None  
+  */
 void moveServo(struct Servo *servo, uint32_t position) {
 	osMutexWait(servo->mutexID, osWaitForever);
 	servo->position = position;
 	osMutexRelease(servo->mutexID);
 }
 
+/**  
+  * @brief  Function that waits until all the mechanical parts are no longer moving.
+  * @param  *servo: pointer to Servo structure. 
+  * @retval None  
+  */
 void waitUntilServoStopped(struct Servo *servo) {
 	osMutexWait(servo->mutexID, osWaitForever);
 	while (servo->position != servo->realPosition) {
@@ -69,6 +95,11 @@ void waitUntilServoStopped(struct Servo *servo) {
 	osMutexRelease(servo->mutexID);
 }
 
+/**  
+  * @brief  Function that keeps servo at the same position.
+  * @param  *servo: pointer to Servo structure. 
+  * @retval None  
+  */
 void floatServo(struct Servo *servo) {
 	switch (servo->CCR) {
 		case 1:
@@ -85,6 +116,11 @@ void floatServo(struct Servo *servo) {
 	}
 }
 
+/**  
+  * @brief  Thread representing a servo. Periodically updates position. 
+  * @param  *servo: pointer to Servo structure. 
+  * @retval None  
+  */
 void servoThread (void const *argument) {
 	struct Servo *servo;
 	servo = (struct Servo *)argument;

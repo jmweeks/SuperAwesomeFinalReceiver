@@ -1,3 +1,7 @@
+/*!
+	@file project_robot.h
+	Header file that supports @ref project_robot.c
+*/
 #include "stm32f4xx.h"
 #include <math.h>
 
@@ -55,6 +59,9 @@
 #define SWING_POSITION_12 120
 #define SWING_POSITION_13 130
 
+/**  
+  * @brief  Structure representing the robot.  
+  */
 struct Robot {
 	struct Servo *boomServo;
 	struct Servo *crowdServo;
@@ -73,6 +80,9 @@ struct RobotInit {
 	struct Servo *swingServo;
 };
 
+/**  
+  * @brief  Structure that encapsulates robot initialization parameters.  
+  */
 void init_robot(struct Robot *robot, struct RobotInit *robotInit);
 void moveRobot(struct Robot *robot, uint32_t positionY, uint32_t positionZ, uint32_t angle);
 void waitUntilRobotStopped(struct Robot *robot);

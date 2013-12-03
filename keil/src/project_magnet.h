@@ -1,5 +1,12 @@
+/*!
+	@file project_magnet.h
+	Header file that supports @ref project_magnet.c
+*/
 #include "stm32f4xx.h"
 
+/**  
+  * @brief  Structure representing Magnet.  
+  */
 struct Magnet {
 	GPIO_TypeDef *GPIO;
 	uint32_t periph;
@@ -7,6 +14,9 @@ struct Magnet {
 	uint32_t isOn;
 };
 
+/**  
+  * @brief  Structure containing magnet initialization parameters. 
+  */
 struct MagnetInit {
 	GPIO_TypeDef *GPIOx;
 	uint32_t periph;

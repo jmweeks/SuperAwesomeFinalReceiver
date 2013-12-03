@@ -1,3 +1,7 @@
+/*!
+	@file project_receiver.h
+	Header file that supports @ref project_receiver.c
+*/
 #include "stm32f4xx.h"
 #include "cmsis_os.h"
 
@@ -8,6 +12,9 @@
 #ifndef RECEIVER_STRUCT
 #define RECEIVER_STRUCT
 
+/**  
+  * @brief  Structure representing receiver.   
+  */
 struct Receiver {
 	uint8_t state;
 	uint8_t buffer_space;

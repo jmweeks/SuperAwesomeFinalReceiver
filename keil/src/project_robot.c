@@ -1,9 +1,18 @@
+/*!
+	@file project_robot.c
+	Source file that provides robot control functionality.
+*/
 #include "stm32f4xx.h"
 #include <math.h>
 
 #include "project_robot.h"
 #include "project_init.h"
 
+/**  
+  * @brief  Function that updates position of robot
+  * @param  *robot: pointer to Robot structure.  
+  * @retval None  
+  */
 static void updateRobotPosition(struct Robot *robot) {
 	if (robot->positionY < POSITION_Y_MIN) {
 		robot->positionY = POSITION_Y_MIN;
@@ -120,12 +129,24 @@ static void updateRobotPosition(struct Robot *robot) {
 	}
 }
 
+/**  
+  * @brief  Function that waits until mechanical parts of robot stop moving.
+  * @param  *robot: pointer to Robot structure.  
+  * @retval None  
+  */
 void waitUntilRobotStopped(struct Robot *robot) {
 	waitUntilServoStopped(robot->boomServo);
 	waitUntilServoStopped(robot->crowdServo);
 	waitUntilServoStopped(robot->swingServo);
 }
 
+
+/**  
+  * @brief  Function that initializes robot.
+  * @param  *robot: pointer to Robot structure.
+  * @param  *robotInit: pointer to RobotInit structure.  
+  * @retval None  
+  */
 void init_robot(struct Robot *robot, struct RobotInit *robotInit) {
 	robot->boomServo = robotInit->boomServo;
 	robot->crowdServo = robotInit->crowdServo;
@@ -140,6 +161,14 @@ void init_robot(struct Robot *robot, struct RobotInit *robotInit) {
 	robot->angle = 0;
 }
 
+/**  
+  * @brief  Function that moves robot arm to desired position.
+  * @param  *robot: pointer to Robot structure.
+  * @param  positionY: Forward/backward position of arm
+  * @param  positionZ: Up/Down position (binary value).
+  * @param  angle: angle of robot arm 
+  * @retval None  
+  */
 void moveRobot(struct Robot *robot, uint32_t positionY, uint32_t positionZ, uint32_t angle) {
 	if (robot->positionY != positionY || robot->positionZ != positionZ || robot->angle != angle) {
 		robot->positionY = positionY;
@@ -160,12 +189,23 @@ void moveRobot(struct Robot *robot, uint32_t positionY, uint32_t positionZ, uint
 	}
 }
 
+/**  
+  * @brief  Hold motors of robot arm at current position.
+  * @param  *robot: pointer to Robot structure.
+  * @retval None  
+  */
 void floatRobot(struct Robot *robot) {
 	floatServo(robot->boomServo);
 	floatServo(robot->crowdServo);
 	floatServo(robot->swingServo);
 }
 
+
+/**  
+  * @brief  Move robot arm to "Parked" position.
+  * @param  *robot: pointer to Robot structure.
+  * @retval None  
+  */
 void parkRobot(struct Robot *robot) {
 	if (robot->positionY == PARK_Y && robot->positionZ == PARK_Z && robot->angle == PARK_ANGLE) {
 		robot->positionY = 1;

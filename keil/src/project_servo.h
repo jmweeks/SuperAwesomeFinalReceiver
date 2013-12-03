@@ -1,3 +1,7 @@
+/*!
+	@file project_servo.h
+	Header file that supports project_servo.c file.
+*/
 #include "stm32f4xx.h"
 #include "cmsis_os.h"
 
@@ -17,6 +21,9 @@
 #ifndef SERVO_STRUCT_DEF
 #define SERVO_STRUCT_DEF
 
+/**  
+  * @brief  Structure representing a servo motor.  
+  */
 struct Servo {
 	uint32_t CCR;
 	uint32_t position;
@@ -27,6 +34,9 @@ struct Servo {
 	osMutexId mutexID;
 };
 
+/**  
+  * @brief  Structure containing servo initialization parameters. 
+  */
 struct ServoInit {
 	uint32_t CCR;
 	uint32_t maxPosition;

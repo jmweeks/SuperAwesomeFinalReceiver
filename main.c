@@ -255,6 +255,11 @@ void ledThread (void const *argument) {
 	}
 }
 
+/**
+  * @brief  IRQ handler for TIM3
+	* @param  None
+  * @retval None
+  */
 void TIM3_IRQHandler(void) {
   if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)			//Checks interrupt status register to ensure an interrupt is pending
   {
