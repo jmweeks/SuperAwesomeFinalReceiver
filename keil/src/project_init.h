@@ -7,7 +7,7 @@ void init_LEDS(void);
 
 #define LED_FLASH_DELAY_SCALING 20
 
-#define TIM3_FREQUENCY 3
+#define TIM3_FREQUENCY 5
 
 #define Y_MIN				0
 #define Y_MAX				6
