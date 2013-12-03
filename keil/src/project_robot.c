@@ -167,7 +167,7 @@ void floatRobot(struct Robot *robot) {
 }
 
 void parkRobot(struct Robot *robot) {
-	if (robot->positionY == PARK_Y && robot->positionZ == PARK_Z && robot->swingPosition == PARK_ANGLE) {
+	if (robot->positionY == PARK_Y && robot->positionZ == PARK_Z && robot->angle == PARK_ANGLE) {
 		robot->positionY = 1;
 		robot->positionZ = 1;
 		robot->angle = 1;
